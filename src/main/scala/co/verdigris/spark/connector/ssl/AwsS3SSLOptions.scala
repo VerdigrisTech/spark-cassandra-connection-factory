@@ -63,10 +63,10 @@ object AwsS3SSLOptions {
       */
     def withCipherSuites(cipherSuites: Set[String]): Builder = {
       val oldConf = this.cassandraSSLConf
-        .getOrElse(new CassandraSSLConf(enabledAlgorithms = cipherSuites))
+        .getOrElse(CassandraSSLConf(enabledAlgorithms = cipherSuites))
 
       this.cassandraSSLConf = Some(
-        new CassandraSSLConf(
+        CassandraSSLConf(
           oldConf.enabled,
           oldConf.trustStorePath,
           oldConf.trustStorePassword,
@@ -83,10 +83,10 @@ object AwsS3SSLOptions {
 
     /** Set the Cassandra SSL configuration.
       * <p/>
-      * If this method isn't called, it will
+      * If this method isn't called, it will instantiate a new Cassandra SSL configuration object with default values.
       *
-      * @param conf
-      * @return
+      * @param conf Cassandra SSL configuration object.
+      * @return this builder.
       */
     def withSSLConf(conf: CassandraSSLConf): Builder = {
       this.cassandraSSLConf = Some(conf)
@@ -100,7 +100,7 @@ object AwsS3SSLOptions {
       */
     def build(): AwsS3SSLOptions =
       new AwsS3SSLOptions(
-        this.cassandraSSLConf.getOrElse(new CassandraSSLConf()),
+        this.cassandraSSLConf.getOrElse(CassandraSSLConf()),
         this.awsRegion)
   }
 
