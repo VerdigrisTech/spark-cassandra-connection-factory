@@ -7,8 +7,8 @@ import com.datastax.spark.connector.cql.CassandraConnectorConf.CassandraSSLConf
 import com.datastax.spark.connector.cql._
 import org.apache.spark.{SparkConf, SparkContext}
 
-object S3ConnectionFactory extends CassandraConnectionFactory {
-  val sparkConf: SparkConf = SparkContext.getOrCreate().getConf
+trait S3ConnectionFactory extends CassandraConnectionFactory {
+  protected val sparkConf: SparkConf = SparkContext.getOrCreate().getConf
   protected var s3Region: Option[String] = sparkConf.getOption("spark.connection.ssl.s3AwsRegion")
 
   /** Returns the Cluster.Builder object used to setup Cluster instance. */
