@@ -11,9 +11,6 @@ class AwsS3SSLOptions(
       sslConf.trustStorePath,
       sslConf.trustStorePassword,
       Some(sslConf.trustStoreType),
-      sslConf.keyStorePath,
-      sslConf.keyStorePassword,
-      Some(sslConf.keyStoreType),
       sslConf.enabledAlgorithms,
       awsRegion)
 
@@ -72,11 +69,8 @@ object AwsS3SSLOptions {
           oldConf.trustStorePassword,
           oldConf.trustStoreType,
           oldConf.protocol,
-          cipherSuites,
-          oldConf.clientAuthEnabled,
-          oldConf.keyStorePath,
-          oldConf.keyStorePassword,
-          oldConf.keyStoreType))
+          cipherSuites)
+      )
 
       this
     }
