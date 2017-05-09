@@ -8,7 +8,7 @@ crossScalaVersions := Seq("2.10.6", "2.11.10")
 
 libraryDependencies += "org.apache.spark" %% "spark-core" % "2.0.2" % "provided"
 libraryDependencies += "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.0-M3" % "provided"
-libraryDependencies += "co.verdigris.ssl" %% "ssllib" % "1.1.1"
+libraryDependencies += "co.verdigris.ssl" %% "ssllib" % "1.1.2"
 
 s3region := Region.US_Standard
 s3overwrite := true
