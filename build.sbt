@@ -6,9 +6,12 @@ version := "0.3.5"
 scalaVersion := "2.11.10"
 crossScalaVersions := Seq("2.10.6", "2.11.10")
 
+lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.0.0"
+
 libraryDependencies += "org.apache.spark" %% "spark-core" % "2.0.2" % "provided"
 libraryDependencies += "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.0-M3" % "provided"
 libraryDependencies += "co.verdigris.ssl" %% "ssllib" % "1.1.2"
+libraryDependencies += scalaTest % Test
 
 s3region := Region.US_Standard
 s3overwrite := true
