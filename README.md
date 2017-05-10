@@ -4,7 +4,11 @@ Cassandra connection factories for Apache Spark
 
 ## Usage
 
-### SBT
+This library is built against version `2.0.0-M3` of `spark-cassandra-connector`.
+
+### Adding `spark-cassandra-connection-factory` as dependency in your project
+
+#### SBT
 
 In `build.sbt`:
 
@@ -62,3 +66,11 @@ Virginia) and a Java KeyStore (JKS) file called `my-cluster.jks`:
 ```sh
 $ aws s3 cp /path/to/my-cluster.jks s3://my-tls-bucket/remote/path/my-cluster.jks --acl authenticated-read --sse aws:kms --sse-kms-key-id $MY_KMS_ARN
 ```
+
+## Known Issues
+
+### Missing support for client auth
+
+Because the `2.0.0-M3` version of `spark-cassandra-connector` library does not
+have support for client auth, this library currently does not support client
+auth at the moment.
