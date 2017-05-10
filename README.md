@@ -95,6 +95,50 @@ val conf = new SparkConf()
 val sc = SparkContext.getOrCreate(conf)
 ```
 
+#### Multiple clusters
+
+If you have multiple clusters with different JKS files or even different
+client-to-node encryption settings altogether, you can scope your
+Spark configuration on a per-connector-basis:
+
+```scala
+import com.datastax.spark.connector._
+import com.datastax.spark.connector.cql._
+
+val cluster1 = CassandraConnector(sc.getConf
+    .set("spark.cassandra.connection.host", "node-1.mycluster.example.com")
+    .set("spark.cassandra.auth.username", "rickastley")
+    .set("spark.cassandra.auth.password", "nevergonnagiveyouup")
+    .set("spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.AwsS3USEast1ConnectionFactory")
+    .set("spark.cassandra.connection.ssl.enabled", "true")
+    .set("spark.cassandra.connection.ssl.trustStore.path", "s3://my-tls-bucket/my-cluster.jks")
+    .set("spark.cassandra.connection.ssl.trustStore.password", "nevergonnaletyoudown"))
+
+val cluster2 = CassandraConnector(sc.getConf
+    .set("spark.cassandra.connection.host", "node-1.othercluster.example.com")
+    .set("spark.cassandra.auth.username", "rickastley")
+    .set("spark.cassandra.auth.password", "nevergonnagiveyouup")
+    .set("spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.AwsS3USEast1ConnectionFactory")
+    .set("spark.cassandra.connection.ssl.enabled", "true")
+    .set("spark.cassandra.connection.ssl.trustStore.path", "s3://my-tls-bucket/other-cluster.jks")
+    .set("spark.cassandra.connection.ssl.trustStore.password", "nevergonnatellalie"))
+
+val localDevCluster = CassandraConnector(sc.getConf
+    .set("spark.cassandra.connection.host", "127.0.0.1")
+    .set("spark.cassandra.connection.ssl.enabled", "false"))
+
+val lyricsRdd = {
+    implicit val c = cluster1
+    sc.cassandraTable("some_keyspace", "lyrics_by_artist")
+        .where("artist = ?", "Rick Astley")
+}
+
+{
+    implicit val c = cluster2
+    lyricsRdd.saveToCassandra("rick_astley", "my_lyrics")
+}
+```
+
 ## Known Issues
 
 ### Missing support for client auth
