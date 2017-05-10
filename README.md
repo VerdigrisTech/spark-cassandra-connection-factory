@@ -160,3 +160,10 @@ sqlContext.setConf("MyCluster2/spark.cassandra.connection.factory", "DefaultConn
 ```
 
 See JIRA issue: [SPARKC-488](https://datastax-oss.atlassian.net/browse/SPARKC-488).
+
+## License
+
+Released under Apache 2.0 license. See [LICENSE](https://github.com/VerdigrisTech/spark-cassandra-connection-factory/blob/master/LICENSE)
+for legal details.
+
+Copyright © 2017 Verdigris Technologies Inc. All rights reserved.
