@@ -146,3 +146,17 @@ val lyricsRdd = {
 Because the `2.0.0-M3` version of `spark-cassandra-connector` library does not
 have support for client auth, this library currently does not support client
 auth at the moment. It will be added once we build against `2.0.1`.
+
+### Dataset/DataFrame limitations
+
+As of this writing, `spark-cassandra-connector` library does not have support
+for custom connection factory on SQLContext nor SparkSession. This is a known
+issue that may or may not eventually be worked on. For now, the library cannot
+be used to do per-cluster Dataset/DataFrame configuration such as the following:
+
+```scala
+sqlContext.setConf("MyCluster1/spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.AwsS3USEast1ConnectionFactory")
+sqlContext.setConf("MyCluster2/spark.cassandra.connection.factory", "DefaultConnectionFactory")
+```
+
+See JIRA issue: [SPARKC-488](https://datastax-oss.atlassian.net/browse/SPARKC-488).
