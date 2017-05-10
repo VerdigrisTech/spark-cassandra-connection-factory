@@ -6,7 +6,7 @@ class AwsS3APNortheast2ConnectionFactoryTest extends ConnectionFactorySpec {
   override def beforeAll {
     super.beforeAll
 
-    factory = AwsS3APNortheast1ConnectionFactory
+    factory = AwsS3APNortheast2ConnectionFactory
   }
 
   describe(".clusterBuilder") {
