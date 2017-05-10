@@ -4,9 +4,10 @@ Cassandra connection factories for Apache Spark
 
 ## Usage
 
-This library is built against version `2.0.0-M3` of `spark-cassandra-connector`.
-
 ### Adding `spark-cassandra-connection-factory` as dependency in your project
+
+This library is built against version `2.0.0-M3` of `spark-cassandra-connector`
+and will not be compatible with earlier versions.
 
 #### SBT
 
@@ -67,10 +68,37 @@ Virginia) and a Java KeyStore (JKS) file called `my-cluster.jks`:
 $ aws s3 cp /path/to/my-cluster.jks s3://my-tls-bucket/remote/path/my-cluster.jks --acl authenticated-read --sse aws:kms --sse-kms-key-id $MY_KMS_ARN
 ```
 
+### Setting configurations for your Spark context
+
+Continuing from [previous section](#uploading-to-s3), we will assume your JKS
+file is hosted on `my-tls-bucket` S3 bucket on US East 1 (N. Virginia).
+
+> ##### NOTE
+> If you have SSE-KMS enabled and are running this example on an AWS EC2
+> instance, be sure the IAM role associated with the EC2 instance has access to
+> the KMS private key.
+
+#### Basic example
+
+```scala
+val conf = new SparkConf()
+  .setMaster("local[*]")
+  .setAppName("JKS on S3 Example")
+  .set("spark.cassandra.connection.host", "node-1.mycluster.example.com")
+  .set("spark.cassandra.auth.username", "rickastley")
+  .set("spark.cassandra.auth.password", "nevergonnagiveyouup")
+  .set("spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.AwsS3USEast1ConnectionFactory")
+  .set("spark.cassandra.connection.ssl.enabled", "true")
+  .set("spark.cassandra.connection.ssl.trustStore.path", "s3://my-tls-bucket/my-cluster.jks")
+  .set("spark.cassandra.connection.ssl.trustStore.password", "nevergonnaletyoudown")
+
+val sc = SparkContext.getOrCreate(conf)
+```
+
 ## Known Issues
 
 ### Missing support for client auth
 
 Because the `2.0.0-M3` version of `spark-cassandra-connector` library does not
 have support for client auth, this library currently does not support client
-auth at the moment.
+auth at the moment. It will be added once we build against `2.0.1`.
