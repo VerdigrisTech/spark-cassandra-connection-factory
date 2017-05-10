@@ -1,5 +1,10 @@
 # spark-cassandra-connection-factory
 
+[![CircleCI](https://img.shields.io/circleci/project/VerdigrisTech/spark-cassandra-connection-factory.svg)](https://circleci.com/gh/VerdigrisTech/spark-cassandra-connection-factory)
+[![Codecov](https://img.shields.io/codecov/c/github/VerdigrisTech/spark-cassandra-connection-factory/master.svg)](https://codecov.io/gh/VerdigrisTech/spark-cassandra-connection-factory)
+[![GitHub release](https://img.shields.io/github/release/VerdigrisTech/spark-cassandra-connection-factory.svg)](https://github.com/VerdigrisTech/spark-cassandra-connection-factory/releases)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/VerdigrisTech/spark-cassandra-connection-factory/blob/master/LICENSE)
+
 Cassandra connection factories for Apache Spark
 
 ## Usage
