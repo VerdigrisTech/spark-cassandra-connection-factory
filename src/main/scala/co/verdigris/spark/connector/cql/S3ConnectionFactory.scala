@@ -5,12 +5,8 @@ import com.datastax.driver.core.policies.ExponentialReconnectionPolicy
 import com.datastax.driver.core.{Cluster, QueryOptions, SSLOptions, SocketOptions}
 import com.datastax.spark.connector.cql.CassandraConnectorConf.CassandraSSLConf
 import com.datastax.spark.connector.cql._
-import org.apache.spark.{SparkConf, SparkContext}
 
-trait S3ConnectionFactory extends CassandraConnectionFactory {
-  protected val sparkConf: SparkConf = SparkContext.getOrCreate().getConf
-  protected var s3Region: Option[String] = sparkConf.getOption("spark.connection.ssl.s3AwsRegion")
-
+class S3ConnectionFactory extends CassandraConnectionFactory {
   /** Returns the Cluster.Builder object used to setup Cluster instance. */
   def clusterBuilder(conf: CassandraConnectorConf): Cluster.Builder = {
     val options = new SocketOptions()
@@ -50,7 +46,6 @@ trait S3ConnectionFactory extends CassandraConnectionFactory {
       Some(
         AwsS3SSLOptions.builder()
           .withSSLConf(conf)
-          .withAwsRegion(this.s3Region)
           .build()
       )
     } else {
@@ -60,3 +55,5 @@ trait S3ConnectionFactory extends CassandraConnectionFactory {
 
   override def createCluster(conf: CassandraConnectorConf): Cluster = clusterBuilder(conf).build()
 }
+
+object S3ConnectionFactory extends S3ConnectionFactory

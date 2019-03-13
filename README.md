@@ -92,7 +92,8 @@ val conf = new SparkConf()
   .set("spark.cassandra.connection.host", "node-1.mycluster.example.com")
   .set("spark.cassandra.auth.username", "rickastley")
   .set("spark.cassandra.auth.password", "nevergonnagiveyouup")
-  .set("spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.AwsS3USEast1ConnectionFactory")
+  .set("spark.executorEnv.AWS_REGION", "us-east-1")
+  .set("spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.S3ConnectionFactory")
   .set("spark.cassandra.connection.ssl.enabled", "true")
   .set("spark.cassandra.connection.ssl.trustStore.path", "s3://my-tls-bucket/my-cluster.jks")
   .set("spark.cassandra.connection.ssl.trustStore.password", "nevergonnaletyoudown")
@@ -114,7 +115,8 @@ val cluster1 = CassandraConnector(sc.getConf
     .set("spark.cassandra.connection.host", "node-1.mycluster.example.com")
     .set("spark.cassandra.auth.username", "rickastley")
     .set("spark.cassandra.auth.password", "nevergonnagiveyouup")
-    .set("spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.AwsS3USEast1ConnectionFactory")
+    .set("spark.executorEnv.AWS_REGION", "us-east-1")
+    .set("spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.S3ConnectionFactory")
     .set("spark.cassandra.connection.ssl.enabled", "true")
     .set("spark.cassandra.connection.ssl.trustStore.path", "s3://my-tls-bucket/my-cluster.jks")
     .set("spark.cassandra.connection.ssl.trustStore.password", "nevergonnaletyoudown"))
@@ -123,7 +125,8 @@ val cluster2 = CassandraConnector(sc.getConf
     .set("spark.cassandra.connection.host", "node-1.othercluster.example.com")
     .set("spark.cassandra.auth.username", "rickastley")
     .set("spark.cassandra.auth.password", "nevergonnagiveyouup")
-    .set("spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.AwsS3USEast1ConnectionFactory")
+    .set("spark.executorEnv.AWS_REGION", "us-east-1")
+    .set("spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.S3ConnectionFactory")
     .set("spark.cassandra.connection.ssl.enabled", "true")
     .set("spark.cassandra.connection.ssl.trustStore.path", "s3://my-tls-bucket/other-cluster.jks")
     .set("spark.cassandra.connection.ssl.trustStore.password", "nevergonnatellalie"))
@@ -144,31 +147,6 @@ val lyricsRdd = {
 }
 ```
 
-### Connection factories by S3 regions
-
-Use appropriate connection factory class depending on the region your S3 bucket
-is located in.
-
-All classes below are available under `co.verdigris.spark.connector.cql`
-package.
-
-| Region Name               |    Region ▴    | Factory                              |
-| :------------------------ | :------------: | :----------------------------------- |
-| Asia Pacific (Tokyo)      | ap-northeast-1 | `AwsS3APNortheast1ConnectionFactory` |
-| Asia Pacific (Seoul)      | ap-northeast-2 | `AwsS3APNortheast2ConnectionFactory` |
-| Asia Pacific (Mumbai)     | ap-south-1     | `AwsS3APSouth1ConnectionFactory`     |
-| Asia Pacific (Singapore)  | ap-southeast-1 | `AwsS3APSoutheast1ConnectionFactory` |
-| Asia Pacific (Sydney)     | ap-southeast-2 | `AwsS3APSoutheast2ConnectionFactory` |
-| Canada (Central)          | ca-central-1   | `AwsS3CACentral1ConnectionFactory`   |
-| EU (Frankfurt)            | eu-central-1   | `AwsS3EUCentral1ConnectionFactory`   |
-| EU (Ireland)              | eu-west-1      | `AwsS3EUWest1ConnectionFactory`      |
-| EU (London)               | eu-west-2      | `AwsS3EUWest2ConnectionFactory`      |
-| South America (São Paulo) | sa-east-1      | `AwsS3SAEast1ConnectionFactory`      |
-| US East (N. Virginia)     | us-east-1      | `AwsS3USEast1ConnectionFactory`      |
-| US East (Ohio)            | us-east-2      | `AwsS3USEast2ConnectionFactory`      |
-| US West (N. California)   | us-west-1      | `AwsS3USWest1ConnectionFactory`      |
-| US West (Oregon)          | us-west-2      | `AwsS3USWest2ConnectionFactory`      |
-
 ## Known Issues
 
 ### Missing support for client auth
@@ -185,7 +163,8 @@ issue that may or may not eventually be worked on. For now, the library cannot
 be used to do per-cluster Dataset/DataFrame configuration such as the following:
 
 ```scala
-sqlContext.setConf("MyCluster1/spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.AwsS3USEast1ConnectionFactory")
+sqlContext.setConf("MyCluster1/spark.executorEnv.AWS_REGION", "us-east-1")
+sqlContext.setConf("MyCluster1/spark.cassandra.connection.factory", "co.verdigris.spark.connector.cql.S3ConnectionFactory")
 sqlContext.setConf("MyCluster2/spark.cassandra.connection.factory", "DefaultConnectionFactory")
 ```
 
