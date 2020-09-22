@@ -2,7 +2,7 @@ import com.amazonaws.services.s3.model.Region
 
 name := "spark-cassandra-connection-factory"
 organization := "co.verdigris.spark"
-version := "0.4.0"
+version := "0.5.0"
 scalaVersion := "2.11.12"
 crossScalaVersions := Seq("2.11.12")
 
