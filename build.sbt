@@ -4,7 +4,7 @@ name := "spark-cassandra-connection-factory"
 organization := "co.verdigris.spark"
 version := "0.4.0"
 scalaVersion := "2.11.12"
-crossScalaVersions := Seq("2.11.12", "2.12.12")
+crossScalaVersions := Seq("2.11.12")
 
 lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.0.0"
 
