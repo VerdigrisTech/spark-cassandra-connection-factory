@@ -18,3 +18,8 @@ project/plugins/project/
 
 # IntelliJ
 .idea/
+
+# Metals
+.metals/
+.bloop/
+metals.sbt
