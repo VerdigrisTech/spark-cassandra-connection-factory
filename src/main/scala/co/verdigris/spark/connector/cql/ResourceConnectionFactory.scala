@@ -66,7 +66,8 @@ class ResourceConnectionFactory extends CassandraConnectionFactory {
     this.keyStoreFromTrustStoreConf(conf) match {
       case None => None
       case Some(keyStore) => {
-        val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+        val trustManagerFactory = TrustManagerFactory.getInstance(
+          TrustManagerFactory.getDefaultAlgorithm())
         trustManagerFactory.init(keyStore)
 
         val context = SSLContext.getInstance(conf.protocol)
