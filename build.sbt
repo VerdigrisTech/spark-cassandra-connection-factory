@@ -3,13 +3,13 @@ import com.amazonaws.services.s3.model.Region
 name := "spark-cassandra-connection-factory"
 organization := "co.verdigris.spark"
 version := "0.4.0"
-scalaVersion := "2.11.10"
-crossScalaVersions := Seq("2.10.6", "2.11.10")
+scalaVersion := "2.11.12"
+crossScalaVersions := Seq("2.10.7", "2.11.12", "2.12.12")
 
 lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.0.0"
 
-libraryDependencies += "org.apache.spark" %% "spark-core" % "2.0.2" % "provided"
-libraryDependencies += "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.0-M3" % "provided"
+libraryDependencies += "org.apache.spark" %% "spark-core" % "2.3.2" % "provided"
+libraryDependencies += "com.datastax.spark" %% "spark-cassandra-connector" % "2.3.2" % "provided"
 libraryDependencies += "co.verdigris.ssl" %% "ssllib" % "1.1.2"
 libraryDependencies += scalaTest % Test
 
