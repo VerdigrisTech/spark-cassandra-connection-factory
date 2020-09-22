@@ -8,7 +8,7 @@ import org.scalatest.{BeforeAndAfterEach, Matchers}
 trait ConnectionFactorySpec extends SparkContextUnitSpec with Matchers with BeforeAndAfterEach {
   var cassandraConf: CassandraConnectorConf = _
   var sslConf: CassandraConnectorConf.CassandraSSLConf = _
-  var factory: S3ConnectionFactory = _
+  var factory: CassandraConnectionFactory = _
 
   override def beforeEach {
     sslConf = CassandraConnectorConf.CassandraSSLConf(enabled = true, Some("s3://bucket/key.jks"), Some("password"))
